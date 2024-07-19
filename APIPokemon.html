@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pokedex</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/press-start-2p" rel="stylesheet">
+  <style>
+    body {
+      background-color: #35b8f5;
+      color: #fff;
+      font-family: 'Press Start 2P', cursive;
+    }
+    .navbar {
+      background-color: #ff0000;
+    }
+    .navbar-brand {
+      color: #fff;
+      font-size: 1.5rem;
+    }
+    .navbar-nav .nav-link {
+      color: #fff;
+    }
+    header {
+      padding: 20px;
+      text-align: center;
+      background-color: #ffcc00;
+      color: #000;
+    }
+    .pokemon-container {
+      margin-top: 20px;
+      text-align: center;
+    }
+    .pokemon-card {
+      background-color: #fff;
+      color: #000;
+      border: 2px solid #000;
+      border-radius: 8px;
+      padding: 20px;
+      display: inline-block;
+      text-align: center;
+    }
+    .pokemon-card img {
+      image-rendering: pixelated;
+      height: 150px;
+      width: 150px;
+    }
+    .btn-custom {
+      background-color: #ffcc00;
+      border: 2px solid #000;
+      border-radius: 8px;
+      color: #000;
+      padding: 10px 20px;
+      text-transform: uppercase;
+      transition: background-color 0.3s;
+      font-family: 'Press Start 2P', cursive;
+    }
+    .btn-custom:hover {
+      background-color: #ff9900;
+      color: white;
+    }
+    footer {
+      background-color: #ff0000;
+      color: #fff;
+      text-align: center;
+      padding: 10px 0;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="#">Menú</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Pokédex</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Mapa</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  
+  <header>
+    <h1>Pokemon #0151</h1>
+  </header>
+
+  <div class="container pokemon-container">
+    <div id="pokemon" class="pokemon-card"></div>
+  </div>
+  
+  <footer>
+    <p>&copy; Universidad Tecnológica Metropolitana | YAOP.</p>
+  </footer>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      
+      fetch(`https://pokeapi.co/api/v2/pokemon/mew`)
+        .then(respuesta => respuesta.json())
+        .then(datos => {
+          const pokemon = document.getElementById('pokemon');
+          pokemon.innerHTML = `
+            <img src="${datos.sprites.front_default}" alt="${datos.name}">
+            <h5>${datos.name.toUpperCase()}</h5>
+            <p>Altura: ${datos.height / 10} m</p>
+            <p>Peso: ${datos.weight / 10} kg</p>
+            <a href="https://www.pokemon.com/us/pokedex/${datos.name}" target="_blank" class="btn btn-custom">Ver más</a>
+          `;
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    });
+  </script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
